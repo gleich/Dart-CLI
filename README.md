@@ -1,3 +1,3 @@
 # DART-CLI
 
-A sample command-line application.
+A simple command-line application.

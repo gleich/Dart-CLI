@@ -13,7 +13,7 @@ void main(List<String> arguments) {
 
   // Casting Argument types
   final problemNumbers = int.parse(argResults['problems']);
-  final type = argResults['type'].toLowerCase();
+  var type = argResults['type'].toLowerCase();
 
   // Checking Problem Types
   if ('a' != type &&
@@ -28,25 +28,89 @@ void main(List<String> arguments) {
 
   // Asking problems
   var correct = 0;
-  for (var i = 0; i <= problemNumbers; i++) {
+  var timesWrong = 0;
+  for (var i = 1; i <= problemNumbers; i++) {
     clearOutput();
     print('Problem: $i/$problemNumbers');
-    var num1 = Dart_CLI.random();
-    var num2 = Dart_CLI.random();
-    var timesWrong = 0;
+    var num1 = Dart_CLI.random(100);
+    var num2 = Dart_CLI.random(100);
+    num solution;
+    String sign;
+    if (type == 'all') {
+      var typeChoice = Dart_CLI.random(3);
+      switch (typeChoice) {
+        case 0:
+          {
+            type = 'a';
+          }
+          break;
+        case 1:
+          {
+            type = 'm';
+          }
+          break;
+        case 2:
+          {
+            type = 's';
+          }
+          break;
+        case 3:
+          {
+            type = '-';
+          }
+          break;
+      }
+    }
     switch (type) {
       case 'a':
         {
-          var solution = num1 + num2;
-          print('What is $num1 + $num2');
-          var line = stdin.readLineSync(encoding: Encoding.getByName('utf-8'));
-          if (int.parse(line.trim()) == solution) {
-            print('😁 Looks like you got the problem right!');
-            correct += 1;
-          } else {}
+          sign = '+';
+          solution = num1 + num2;
         }
+        break;
+      case 'm':
+        {
+          sign = 'x';
+          solution = num1 * num2;
+        }
+        break;
+      case 's':
+        {
+          sign = '-';
+          solution = num1 - num2;
+        }
+        break;
+      case 'd':
+        {
+          sign = '*';
+          while (true) {
+            solution = num1 / num2;
+            if (solution.runtimeType == 0.0.runtimeType) {
+              num1 = Dart_CLI.random(100);
+              num2 = Dart_CLI.random(100);
+              continue;
+            } else {
+              break;
+            }
+          }
+        }
+        break;
     }
+    print('\n$num1 $sign $num2');
+    var input = stdin.readLineSync(encoding: Encoding.getByName('utf-8'));
+    if (int.parse(input.trim()) == solution) {
+      print('😁 Looks like you got the problem right!');
+      correct += 1;
+    } else {
+      print('😟 Looks like you got the problem wrong!');
+      timesWrong += 1;
+    }
+    print('Next problem in 5 seconds');
+    sleep(const Duration(seconds: 5));
+    clearOutput();
   }
+  print('You got $correct correct out of $problemNumbers problems');
+  print('YOu got $timesWrong wrong out of $problemNumbers problems');
 }
 
 void clearOutput() {

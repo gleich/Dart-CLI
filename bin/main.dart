@@ -33,16 +33,17 @@ void main(List<String> arguments) {
     print('Problem: $i/$problemNumbers');
     var num1 = Dart_CLI.random();
     var num2 = Dart_CLI.random();
+    var timesWrong = 0;
     switch (type) {
       case 'a':
         {
           var solution = num1 + num2;
           print('What is $num1 + $num2');
           var line = stdin.readLineSync(encoding: Encoding.getByName('utf-8'));
-          if (line.trim().toString() == solution) {
+          if (int.parse(line.trim()) == solution) {
             print('😁 Looks like you got the problem right!');
             correct += 1;
-          }
+          } else {}
         }
     }
   }

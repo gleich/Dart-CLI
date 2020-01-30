@@ -10,28 +10,14 @@ void main(List<String> arguments) {
   final argResults = parser.parse(arguments);
 
   // Casting Argument types
-  print(argResults['divison']);
   final problemNumbers = int.parse(argResults['problems']);
-  var problemType;
+  final type = argResults['type'].toLowerCase();
 
   // Setting Problem Types
-  switch (argResults['type']) {
-    case 'a':
-      problemType = 'addition';
-      break;
-    case 's':
-      problemType = 'subtraction';
-      break;
-    case 'm':
-      problemType = 'multiplication';
-      break;
-    case 'd':
-      problemType = 'divison';
-      break;
-    default:
-      clearOutput();
-      print('Please choose a valid problem type');
-      exit(2);
+  if ('a' != type && 'm' != type && 's' != type && 'd' != type) {
+    print('Please choose one of the valid problem types:');
+    print('\na\nm\ns\nd');
+    exit(2);
   }
 
   // Asking problems
